@@ -1,0 +1,44 @@
+﻿@model UserManagement.Models.UserViewModel
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h2>Detail</h2>
+
+@if(String.IsNullOrEmpty(Model.Message))
+{
+    <fieldset>
+        @Html.HiddenFor(m => m.Id)
+        <p>
+            @Html.Label("First name");
+            <br />
+            @Html.DisplayFor(m => m.FirstName)
+        </p>
+        <p>
+            @Html.Label("Last name");
+            <br />
+            @Html.DisplayFor(m => m.LastName)
+        </p>
+        <p>
+            @Html.Label("Email");
+            <br />
+            @Html.DisplayFor(m => m.Email)
+        </p>
+        <p>
+            @Html.Label("Create Date");
+            <br />
+            @Html.DisplayFor(m => m.CreateDate)
+        </p>
+        <p>
+            <h3>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+            </h3>
+        </p>
+    </fieldset>
+}
+else
+{
+    <h3>
+        @Html.DisplayFor(model => model.Message)
+    </h3>
+}

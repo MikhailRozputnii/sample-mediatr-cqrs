@@ -1,0 +1,48 @@
+﻿@model UserManagement.Models.UserViewModel;
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+@using (Html.BeginForm("Edit", "User"))
+{
+    <fieldset>
+        <p>
+            @Html.LabelFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+            <br />
+            @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+        </p>
+        <p>
+            @Html.LabelFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+            <br />
+            @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+
+        </p>
+        <p>
+            @Html.LabelFor(m => m.Email, "Email")
+            <br />
+            @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
+        </p>
+        <p>
+            @Html.LabelFor(m => m.CreateDate, "Create date")
+            <br />
+            @Html.DisplayFor(m => m.CreateDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.HiddenFor(m => m.CreateDate)
+        </p>
+        <p>
+            @Html.LabelFor(m => m.Email, "Update date")
+            <br />
+            @Html.DisplayFor(m => m.UpdateDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.HiddenFor(m => m.UpdateDate)
+        </p>
+        <p>
+            <input type="submit" class="btn btn-primary btn-lg" value="Send" />
+        </p>
+    </fieldset>
+}
+@if (!String.IsNullOrEmpty(Model.Message))
+{
+    <h3>
+    @Html.DisplayFor(model => model.Message)
+    </h3>
+}

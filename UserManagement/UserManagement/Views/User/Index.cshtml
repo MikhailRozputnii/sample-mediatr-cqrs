@@ -1,0 +1,98 @@
+﻿@using UserManagement.Models
+@using UserManagement.Common
+@model IndexViewModel
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>All Users</h2>
+
+@if (String.IsNullOrEmpty(Model.Message))
+{
+    @using (Html.BeginForm("Index", "User", FormMethod.Get))
+    {
+        <p>
+            Find by name:
+            @Html.EditorFor(model => model.Search)
+            <input type="submit" value="search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    }
+
+    <table class="table">
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-model.SortOrder="@SortField.Name" asp-route-model.Search="@Model.Search"
+                   asp-route-model.IsAscending="@Model.IsAscending"
+                   asp-route-model.CurrentPage="@(Model.PageInfo.PageNumber)">First name</a>
+            </th>
+            <th>
+                @Html.Label("Last name")
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-model.SortOrder="@SortField.Email" asp-route-model.Search="@Model.Search"
+                   asp-route-model.IsAscending="@Model.IsAscending"
+                   asp-route-model.CurrentPage="@(Model.PageInfo.PageNumber)">Email</a>
+            </th>
+            <th>
+                @Html.Label("Create date")
+            </th>
+            <th>
+                @Html.Label("Last Update")
+            </th>
+        </tr>
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.FirstName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.CreateDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.UpdateDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Detail", "Detail", new { id = item.Id }) |
+                    @Html.ActionLink("Remove", "Remove", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+    @if (Model.PageInfo.HasPreviousPage)
+    {
+        <a asp-action="Index"
+           asp-route-model.SortOrder="@Model.SortOrder"
+           asp-route-model.CurrentPage="@(Model.PageInfo.PageNumber - 1)"
+           class="btn btn-default btn">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Back
+        </a>
+    }
+    @if (Model.PageInfo.HasNextPage)
+    {
+        <a asp-action="Index"
+           asp-route-model.SortOrder="@Model.SortOrder"
+           asp-route-model.CurrentPage="@(Model.PageInfo.PageNumber + 1)"
+           class="btn btn-default btn">
+            Next
+            <i class="glyphicon glyphicon-chevron-right"></i>
+        </a>
+    }
+}
+else
+{
+    <h3>@Html.Label(Model.Message)</h3>
+}
